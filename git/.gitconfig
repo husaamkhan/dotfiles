@@ -1,0 +1,5 @@
+[user]
+	email = husaamkhan04@gmail.com
+	name = Husaam Khan
+[alias]
+	plog = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
