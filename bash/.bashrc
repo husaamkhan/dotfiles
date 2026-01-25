@@ -32,3 +32,5 @@ alias grep='grep --color=auto'
 alias c='clear'
 alias gt='cat ~/gittoken'
 
+. "$HOME/.cargo/env"
+source ~/.cargo/env
