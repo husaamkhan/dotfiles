@@ -37,7 +37,7 @@ alias c='clear'
 alias gt='cat ~/gittoken'
 
 alias df='cd ~/.dotfiles'
-alias dev='cd~/dev'
+alias dev='cd ~/dev'
 
 alias vi='vim'
 
