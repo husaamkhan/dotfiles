@@ -36,6 +36,11 @@ alias grep='grep --color=auto'
 alias c='clear'
 alias gt='cat ~/gittoken'
 
+alias df='cd ~/.dotfiles'
+alias dev='cd~/dev'
+
+alias vi='vim'
+
 . "$HOME/.cargo/env"
 source ~/.cargo/env
 
