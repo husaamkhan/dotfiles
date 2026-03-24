@@ -38,6 +38,8 @@ alias gt='cat ~/gittoken | xclip -sel clip'
 
 alias df='cd ~/.dotfiles'
 alias dev='cd ~/dev'
+alias gb='cd ~/dev/gb-emu'
+alias web='cd ~/dev/website'
 
 alias vi='vim'
 
