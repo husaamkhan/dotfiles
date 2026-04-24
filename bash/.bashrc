@@ -43,7 +43,7 @@ alias dev='cd ~/dev'
 alias gb='cd ~/dev/gb-emu'
 alias web='cd ~/dev/website'
 
-alias vi='vim'
+alias vi='nvim'
 
 . "$HOME/.cargo/env"
 source ~/.cargo/env
