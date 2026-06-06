@@ -41,7 +41,10 @@ alias dev='cd ~/dev'
 alias gb='cd ~/dev/gb-emu'
 alias web='cd ~/dev/website'
 
+alias so='source ~/.bashrc'
+
 alias vi='nvim'
+alias kiro-cli='kiro-cli --classic'
 
 . "$HOME/.cargo/env"
 source ~/.cargo/env
