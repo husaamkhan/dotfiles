@@ -7,6 +7,7 @@
 --   KEYMAPS
 --   LSP
 --   AIRLINE
+--   OIL
 
 -- =====================================================
 -- PLUGINS
@@ -29,16 +30,14 @@ plug('nvim-telescope/telescope.nvim')
 -- LSP
 plug('neovim/nvim-lspconfig')
 
--- File tree (neo-tree and its deps)
-plug('MunifTanjim/nui.nvim')
-plug('nvim-tree/nvim-web-devicons')
-plug('Crysthamus/nvim-file-operations')
-plug('folke/snacks.nvim')
-plug('s1n7ax/nvim-window-picker')
-plug('nvim-neo-tree/neo-tree.nvim')
-
 -- Bracket pairs
 plug('jiangmiao/auto-pairs')
+
+-- File Explorer
+plug('stevearc/oil.nvim')
+
+-- Sublime Text style find and replace
+plug('MagicDuck/grug-far.nvim')
 
 vim.call('plug#end')
 
@@ -92,7 +91,6 @@ vim.g.mapleader = ' '
 
 local map = vim.keymap.set
 
---- BUFFERS ---
 -- Switch to next/previous buffer
 map('n', '<leader>bn', ':bn<CR>')
 map('n', '<leader>bp', ':bp<CR>')
@@ -105,14 +103,26 @@ map('n', '<leader>bc', ':bw')
 
 -- Fuzzy finder
 map('n', '<leader>F',  '<cmd>Telescope find_files<CR>')
-map('n', '<leader>G',  '<cmd>Telescope live_grep<CR>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
 
--- Open neo-tree
-map('n', '<leader>n', '<cmd>Neotree<CR>')
+-- Open oil.nvim
+map('n', '<leader>e', '<cmd>Oil<CR>')
 
--- Toggle nvim-tree
-map('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
+-- Open Grug-Far find and replace in new buffer
+map('n', '<leader>G', function()
+  require('grug-far').open()
+  vim.schedule(function()
+    vim.cmd('only')
+  end)
+end)
+
+-- Open Grug-Far find and replace for word under cursor in new buffer
+map('n', '<leader>*', function()
+  require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } })
+  vim.schedule(function()
+    vim.cmd('only')
+  end)
+end)
 
 
 -- =====================================================
@@ -197,4 +207,54 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.g['airline#extensions#tabline#enabled'] = 1
 vim.g.airline_theme = 'minimalist'
+
+
+-- =====================================================
+-- GRUG-FAR
+-- =====================================================
+require("grug-far").setup({
+  engines = {
+    ripgrep = {
+      extraArgs = '--no-ignore --hidden'
+    }
+  }
+})
+
+
+-- =====================================================
+-- OIL
+-- =====================================================
+require("oil").setup({
+	default_file_explorer = true,
+	buf_options = {
+		buflisted = true,
+		bufhidden = "hide"
+	},
+	watch_for_changes = true,
+	view_options      = { show_hidden = true },
+	float = {
+		padding     = 2,
+		max_width   = 0.8,
+		max_height  = 0.8,
+		border      = 'rounded',
+		win_options = { winblend = 0 },
+	},
+	preview_split = "auto"
+})
+
+-- This ai-generated block makes oil not open a bajillion new
+-- buffers every time you navigate to a different directory
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = 'oil://*',
+  callback = function(args)
+    -- delete previous oil buffer when entering a new one
+    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+      if bufnr ~= args.buf
+        and vim.bo[bufnr].filetype == 'oil'
+        and vim.api.nvim_buf_is_valid(bufnr) then
+        vim.api.nvim_buf_delete(bufnr, { force = true })
+      end
+    end
+  end,
+})
 
