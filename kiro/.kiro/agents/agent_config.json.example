@@ -24,6 +24,6 @@
   "resources": [],
   "hooks": {},
   "toolsSettings": {},
-  "useLegacyMcpJson": true,
+  "includeMcpJson": true,
   "model": null
 }

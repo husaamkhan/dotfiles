@@ -41,6 +41,8 @@ alias dev='cd ~/dev'
 alias gb='cd ~/dev/gb-emu'
 alias web='cd ~/dev/website'
 
+alias editvim='vi ~/.config/nvim/init.lua'
+
 alias so='source ~/.bashrc'
 
 alias vi='nvim'
