@@ -39,6 +39,9 @@ plug('stevearc/oil.nvim')
 -- Sublime Text style find and replace
 plug('MagicDuck/grug-far.nvim')
 
+-- Undo tree visualizer
+plug('jiaoshijie/undotree')
+
 vim.call('plug#end')
 
 
@@ -124,6 +127,8 @@ map('n', '<leader>*', function()
   end)
 end)
 
+-- Open Undotree visualizer
+map('n', '<leader>z', function() require('undotree').toggle() end)
 
 -- =====================================================
 -- LSP
