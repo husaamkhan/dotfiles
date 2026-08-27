@@ -8,6 +8,7 @@
 --   LSP
 --   AIRLINE
 --   OIL
+--   VIM VISUAL MULTI
 
 -- =====================================================
 -- PLUGINS
@@ -22,6 +23,7 @@ plug('vim-airline/vim-airline-themes')
 
 -- Theme
 plug('Shatur/neovim-ayu')
+plug('scottmckendry/cyberdream.nvim')
 
 -- Telescope
 plug('nvim-lua/plenary.nvim')
@@ -42,6 +44,9 @@ plug('MagicDuck/grug-far.nvim')
 -- Undo tree visualizer
 plug('jiaoshijie/undotree')
 
+-- Sublime text/VS code style multiple cursors
+plug('mg979/vim-visual-multi')
+
 vim.call('plug#end')
 
 
@@ -50,7 +55,7 @@ vim.call('plug#end')
 -- =====================================================
 
 vim.opt.background    = 'dark'
-vim.cmd('colorscheme ayu-dark')
+vim.cmd('colorscheme cyberdream')
 
 vim.opt.relativenumber = true
 vim.opt.number         = true
@@ -84,7 +89,6 @@ if vim.g.colors_name == 'ayu' then
   vim.api.nvim_set_hl(0, 'Visual',       { bg = '#3E4B59' })
   vim.api.nvim_set_hl(0, 'VisualNOS',    { bg = '#3E4B59' })
 end
-
 
 -- =====================================================
 -- KEYMAPS
@@ -205,7 +209,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-
 -- =====================================================
 -- AIRLINE
 -- =====================================================
@@ -263,3 +266,8 @@ vim.api.nvim_create_autocmd('BufEnter', {
   end,
 })
 
+
+-- =====================================================
+-- VIM VISUAL MULTI
+-- =====================================================
+vim.g.VM_theme = 'codedark'
