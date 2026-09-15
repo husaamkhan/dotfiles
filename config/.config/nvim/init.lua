@@ -59,6 +59,9 @@ vim.cmd('colorscheme cyberdream')
 
 vim.opt.relativenumber = true
 vim.opt.number         = true
+vim.o.cursorline = true
+vim.opt.statuscolumn = "%=%{v:lnum} │ "
+vim.api.nvim_set_hl(0, "VertSplit", { fg = "White" })
 
 -- Show tabs and file status + open file name on top
 vim.opt.showtabline = 2
@@ -83,12 +86,7 @@ vim.opt.termguicolors = true
 -- Prevents cursor from changing from solid rectangle
 vim.opt.guicursor = ''
 
-if vim.g.colors_name == 'ayu' then
-  vim.api.nvim_set_hl(0, 'LineNr',       { fg = '#8A9199' })
-  vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#E6B450', bold = true })
-  vim.api.nvim_set_hl(0, 'Visual',       { bg = '#3E4B59' })
-  vim.api.nvim_set_hl(0, 'VisualNOS',    { bg = '#3E4B59' })
-end
+vim.opt.undofile = true
 
 -- =====================================================
 -- KEYMAPS
@@ -271,3 +269,4 @@ vim.api.nvim_create_autocmd('BufEnter', {
 -- VIM VISUAL MULTI
 -- =====================================================
 vim.g.VM_theme = 'codedark'
+
