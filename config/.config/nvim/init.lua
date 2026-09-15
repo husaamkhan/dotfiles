@@ -3,6 +3,7 @@
 -- =====================================================
 -- SECTIONS:
 --   PLUGINS
+--   PALETTE
 --   SETTINGS
 --   KEYMAPS
 --   LSP
@@ -50,6 +51,18 @@ plug('mg979/vim-visual-multi')
 plug('NeogitOrg/neogit')
 
 vim.call('plug#end')
+
+-- =====================================================
+-- PALETTE
+-- =====================================================
+-- Must be after plug#end so cyberdream is on the runtimepath.
+-- vim.g.palette_* globals are also set for Vimscript access (e.g. airline theme).
+
+local p = require('cyberdream.colors').default
+
+for key, value in pairs(p) do
+  vim.g['palette_' .. key] = value
+end
 
 
 -- =====================================================
@@ -214,8 +227,20 @@ vim.api.nvim_create_autocmd('FileType', {
 -- AIRLINE
 -- =====================================================
 
-vim.g['airline#extensions#tabline#enabled'] = 1
-vim.g.airline_theme = 'minimalist'
+vim.g.airline_theme = 'cyberdream_custom'
+vim.g['airline#extensions#tabline#enabled']      = 1
+vim.g['airline#extensions#tabline#show_buffers'] = 1
+vim.g['airline#extensions#tabline#show_tabs']    = 0
+vim.g['airline#extensions#tabline#fnamemod']     = ':t'
+vim.g['airline#extensions#tabline#formatter']    = 'unique_tail'
+vim.g['airline#extensions#tabline#left_sep']        = ''
+vim.g['airline#extensions#tabline#left_alt_sep']    = ''
+vim.g['airline#extensions#tabline#buf_label_first'] = 0
+vim.g['airline#extensions#tabline#buflnr_max']      = 0
+vim.g['airline#extensions#tabline#show_bufnr']      = 0
+vim.g['airline#extensions#tabline#show_close_button'] = 0
+vim.g['airline#extensions#tabline#tabs_label']      = ''
+vim.g['airline#extensions#tabline#buffers_label']   = ''
 
 -- =====================================================
 -- GRUG-FAR
