@@ -47,6 +47,8 @@ plug('jiaoshijie/undotree')
 -- Sublime text/VS code style multiple cursors
 plug('mg979/vim-visual-multi')
 
+plug('NeogitOrg/neogit')
+
 vim.call('plug#end')
 
 
@@ -54,39 +56,37 @@ vim.call('plug#end')
 -- SETTINGS
 -- =====================================================
 
-vim.opt.background    = 'dark'
+vim.opt.background = 'dark'
 vim.cmd('colorscheme cyberdream')
 
-vim.opt.relativenumber = true
-vim.opt.number         = true
-vim.o.cursorline = true
-vim.opt.statuscolumn = "%=%{v:lnum} │ "
-vim.api.nvim_set_hl(0, "VertSplit", { fg = "White" })
+vim.opt.relativenumber 	= true
+vim.opt.number         	= true
+vim.o.cursorline 	= true
+
+-- Add a vertical line separator between line numbers/signs and text
+vim.opt.signcolumn 	= "yes"
+vim.opt.statuscolumn 	= "%s %l │ "
 
 -- Show tabs and file status + open file name on top
-vim.opt.showtabline = 2
-vim.opt.laststatus  = 2
+vim.opt.showtabline 	= 2
+vim.opt.laststatus  	= 2
 
-vim.opt.scrolloff = 8
+vim.opt.scrolloff 	= 8
 
-vim.opt.encoding = 'utf-8'
+vim.opt.encoding 	= 'utf-8'
 
 -- Some servers have issues with backup files, see #649
-vim.opt.backup      = false
-vim.opt.writebackup = false
+vim.opt.backup		= false
+vim.opt.writebackup	= false
 
--- vim.opt.tabstop     = 4
--- vim.opt.softtabstop = 4
--- vim.opt.shiftwidth  = 4
-vim.opt.smartindent = true
--- vim.opt.autoindent  = true
+vim.opt.smartindent 	= true
 
-vim.opt.termguicolors = true
+vim.opt.termguicolors	= true
 
 -- Prevents cursor from changing from solid rectangle
-vim.opt.guicursor = ''
+vim.opt.guicursor 	= ''
 
-vim.opt.undofile = true
+vim.opt.undofile 	= true
 
 -- =====================================================
 -- KEYMAPS
@@ -131,6 +131,9 @@ end)
 
 -- Open Undotree visualizer
 map('n', '<leader>z', function() require('undotree').toggle() end)
+
+-- Open Neogit
+map('n', '<leader>N', '<cmd>Neogit<CR>')
 
 -- =====================================================
 -- LSP
@@ -213,7 +216,6 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.g['airline#extensions#tabline#enabled'] = 1
 vim.g.airline_theme = 'minimalist'
-
 
 -- =====================================================
 -- GRUG-FAR
