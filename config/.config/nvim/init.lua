@@ -101,6 +101,9 @@ vim.opt.guicursor 	= ''
 
 vim.opt.undofile 	= true
 
+-- Allows incrementing/decrementing letters
+vim.opt.nrformats:append("alpha")
+
 -- =====================================================
 -- KEYMAPS
 -- =====================================================
