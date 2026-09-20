@@ -19,6 +19,7 @@ local plug = vim.fn['plug#']
 
 vim.call('plug#begin')
 
+-- Airline
 plug('vim-airline/vim-airline')
 plug('vim-airline/vim-airline-themes')
 
@@ -48,6 +49,7 @@ plug('jiaoshijie/undotree')
 -- Sublime text/VS code style multiple cursors
 plug('mg979/vim-visual-multi')
 
+-- Git
 plug('NeogitOrg/neogit')
 
 vim.call('plug#end')
@@ -61,7 +63,7 @@ vim.call('plug#end')
 local p = require('cyberdream.colors').default
 
 for key, value in pairs(p) do
-  vim.g['palette_' .. key] = value
+	vim.g['palette_' .. key] = value
 end
 
 
@@ -131,18 +133,18 @@ map('n', '<leader>e', '<cmd>Oil<CR>')
 
 -- Open Grug-Far find and replace in new buffer
 map('n', '<leader>G', function()
-  require('grug-far').open()
-  vim.schedule(function()
-    vim.cmd('only')
-  end)
+	require('grug-far').open()
+	vim.schedule(function()
+		vim.cmd('only')
+	end)
 end)
 
 -- Open Grug-Far find and replace for word under cursor in new buffer
 map('n', '<leader>*', function()
-  require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } })
-  vim.schedule(function()
-    vim.cmd('only')
-  end)
+	require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } })
+	vim.schedule(function()
+		vim.cmd('only')
+	end)
 end)
 
 -- Open Undotree visualizer
@@ -162,68 +164,68 @@ vim.opt.signcolumn = 'yes'
 vim.opt.completeopt = { 'menuone', 'noselect', 'popup' }
 
 vim.diagnostic.config({
-  virtual_text = true,
-  signs        = true,
-  underline    = true,
+	virtual_text = true,
+	signs        = true,
+	underline    = true,
 })
 
 local on_attach = function(client, bufnr)
-  client.server_capabilities.semanticTokensProvider = nil
-  local opts = { buffer = bufnr, silent = true }
+	client.server_capabilities.semanticTokensProvider = nil
+	local opts = { buffer = bufnr, silent = true }
 
-  vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-  map('i', '<C-Space>', vim.lsp.completion.get, opts)
+	vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+	map('i', '<C-Space>', vim.lsp.completion.get, opts)
 
-  -- Trigger LSP completion after typing 1+ keyword character
-  vim.api.nvim_create_autocmd('TextChangedI', {
-    buffer = bufnr,
-    callback = function()
-      local word = vim.fn.matchstr(vim.fn.getline('.'), '\\k\\+$')
-      if #word >= 1 then vim.lsp.completion.get() end
-    end,
-  })
+	-- Trigger LSP completion after typing 1+ keyword character
+	vim.api.nvim_create_autocmd('TextChangedI', {
+		buffer = bufnr,
+		callback = function()
+			local word = vim.fn.matchstr(vim.fn.getline('.'), '\\k\\+$')
+			if #word >= 1 then vim.lsp.completion.get() end
+		end,
+	})
 
-  map('n', 'gd',          vim.lsp.buf.definition,      opts)
-  map('n', 'gy',          vim.lsp.buf.type_definition,  opts)
-  map('n', 'gi',          vim.lsp.buf.implementation,   opts)
-  map('n', 'gr',          vim.lsp.buf.references,        opts)
-  map('n', 'K',           vim.lsp.buf.hover,             opts)
-  map('n', '<leader>rn',  vim.lsp.buf.rename,            opts)
-  map('n', '<leader>ac',  vim.lsp.buf.code_action,       opts)
-  map('n', '<leader>f',   vim.lsp.buf.format,            opts)
-  map('n', '[g',          vim.diagnostic.goto_prev,      opts)
-  map('n', ']g',          vim.diagnostic.goto_next,      opts)
+	map('n', 'gd',          vim.lsp.buf.definition,      opts)
+	map('n', 'gy',          vim.lsp.buf.type_definition,  opts)
+	map('n', 'gi',          vim.lsp.buf.implementation,   opts)
+	map('n', 'gr',          vim.lsp.buf.references,        opts)
+	map('n', 'K',           vim.lsp.buf.hover,             opts)
+	map('n', '<leader>rn',  vim.lsp.buf.rename,            opts)
+	map('n', '<leader>ac',  vim.lsp.buf.code_action,       opts)
+	map('n', '<leader>f',   vim.lsp.buf.format,            opts)
+	map('n', '[g',          vim.diagnostic.goto_prev,      opts)
+	map('n', ']g',          vim.diagnostic.goto_next,      opts)
 
-  map('i', '<Tab>', function()
-    return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
-  end, { buffer = bufnr, expr = true })
-  map('i', '<S-Tab>', function()
-    return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
-  end, { buffer = bufnr, expr = true })
+	map('i', '<Tab>', function()
+		return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
+	end, { buffer = bufnr, expr = true })
+	map('i', '<S-Tab>', function()
+		return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
+	end, { buffer = bufnr, expr = true })
 end
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'c', 'cpp' },
-  callback = function()
-    vim.lsp.start({
-      name      = 'clangd',
-      cmd       = { 'clangd' },
-      on_attach = on_attach,
-      root_dir  = vim.fs.root(0, { '.git', 'Makefile', 'compile_commands.json' }),
-    })
-  end,
+	pattern = { 'c', 'cpp' },
+	callback = function()
+		vim.lsp.start({
+			name      = 'clangd',
+			cmd       = { 'clangd' },
+			on_attach = on_attach,
+			root_dir  = vim.fs.root(0, { '.git', 'Makefile', 'compile_commands.json' }),
+		})
+	end,
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'python' },
-  callback = function()
-    vim.lsp.start({
-      name      = 'pylsp',
-      cmd       = { 'pylsp' },
-      on_attach = on_attach,
-      root_dir  = vim.fs.root(0, { '.git', 'setup.py', 'pyproject.toml' }),
-    })
-  end,
+	pattern = { 'python' },
+	callback = function()
+		vim.lsp.start({
+			name      = 'pylsp',
+			cmd       = { 'pylsp' },
+			on_attach = on_attach,
+			root_dir  = vim.fs.root(0, { '.git', 'setup.py', 'pyproject.toml' }),
+		})
+	end,
 })
 
 -- =====================================================
@@ -249,11 +251,11 @@ vim.g['airline#extensions#tabline#buffers_label']   = ''
 -- GRUG-FAR
 -- =====================================================
 require("grug-far").setup({
-  engines = {
-    ripgrep = {
-      extraArgs = '--no-ignore --hidden'
-    }
-  }
+	engines = {
+		ripgrep = {
+			extraArgs = '--no-ignore --hidden'
+		}
+	}
 })
 
 
@@ -281,17 +283,17 @@ require("oil").setup({
 -- This ai-generated block makes oil not open a bajillion new
 -- buffers every time you navigate to a different directory
 vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = 'oil://*',
-  callback = function(args)
-    -- delete previous oil buffer when entering a new one
-    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-      if bufnr ~= args.buf
-        and vim.bo[bufnr].filetype == 'oil'
-        and vim.api.nvim_buf_is_valid(bufnr) then
-        vim.api.nvim_buf_delete(bufnr, { force = true })
-      end
-    end
-  end,
+	pattern = 'oil://*',
+	callback = function(args)
+		-- delete previous oil buffer when entering a new one
+		for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+			if bufnr ~= args.buf
+				and vim.bo[bufnr].filetype == 'oil'
+				and vim.api.nvim_buf_is_valid(bufnr) then
+				vim.api.nvim_buf_delete(bufnr, { force = true })
+			end
+		end
+	end,
 })
 
 
