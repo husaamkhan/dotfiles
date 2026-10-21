@@ -53,3 +53,6 @@ alias meshlab='meshlab -platform xcb'
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/.local/share/kiro-cli/shell/bashrc.post.bash" ]] && builtin source "${HOME}/.local/share/kiro-cli/shell/bashrc.post.bash"
 
+
+# opencode
+export PATH=/home/husaamkhan/.opencode/bin:$PATH

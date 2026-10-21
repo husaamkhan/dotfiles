@@ -106,6 +106,23 @@ vim.opt.undofile 	= true
 -- Allows incrementing/decrementing letters
 vim.opt.nrformats:append("alpha")
 
+-- Real tabs, 8 wide
+vim.opt.tabstop     = 8
+vim.opt.shiftwidth  = 8
+vim.opt.softtabstop = 0
+vim.opt.expandtab   = false
+
+-- Prevent Python ftplugin from overriding indent settings
+vim.g.python_recommended_style = 0
+
+-- Disables in-editor error diagnostics
+vim.diagnostic.config({
+	virtual_text = false,
+	signs = false,
+	underline = false,
+	update_in_insert = false,
+})
+
 -- =====================================================
 -- KEYMAPS
 -- =====================================================
